@@ -3,8 +3,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-test-site": "node build-test-site.js",
-    "build-client-js": "node build-client-js.js"
+    "build-test-site": "node build-test-site.js"
   },
   "author": "",
   "license": "ISC",
