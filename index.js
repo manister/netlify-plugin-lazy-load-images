@@ -11,7 +11,7 @@ const scriptToInjectPromise = async () =>
   `<script type="text/javascript">${await minify({
     compressor: babelMinify,
     input: 'client/src/lazyLoad.js',
-    output: 'client/dist/lazyLoad.js',
+    output: 'client/lazyLoad.js',
     sync: true,
     options: {
       presets: ['babel-preset-env']
