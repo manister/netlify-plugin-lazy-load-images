@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Images</title>
+</head>
+
+<body>
+  <h1>External Images</h1>
+
+  <img alt="alt text"
+    src="https://images.unsplash.com/photo-1591795741155-03bd2065944c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+  <img alt="alt text"
+    src="https://images.unsplash.com/photo-1590660058203-d7f3599c0edf?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+  <img alt="alt text"
+    src="https://images.unsplash.com/photo-1590219064212-2afc410c1219?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+
+  <h1>Local Images</h1>
+  <img src="/beach.jpg" alt="alt text">
+  <img alt="alt text" src="/blm.jpg">
+  <img alt="alt text" src="/bike.jpg">
+
+  <h1>With srcsets</h1>
+
+  <picture>
+    <source media="(max-width: 500px)"
+      srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80">
+    <source media="(min-width: 501px)"
+      srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80">
+    <img
+      src="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80"
+      alt="alt text">
+  </picture>
+
+  <img
+    srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w,
+                           https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w"
+    sizes="(max-width: 600px) 480px,
+                          800px"
+    src="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop"
+    alt="alt text">
+</body>
+
+</html>

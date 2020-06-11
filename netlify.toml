@@ -1,0 +1,6 @@
+# netlify.toml
+
+[[plugins]]
+package = "."
+  [plugins.inputs]
+    exclude = ["exclude/**"]
