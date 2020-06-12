@@ -3,6 +3,7 @@ inputs:
   - name: exclude
     description: globs to exclude from applying lazy load
     required: false
+    default: []
   - name: paletteSize
     description: number of colours to load in the base64 placeholder
     default: 1
