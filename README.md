@@ -2,6 +2,8 @@
 
 Once site is built, this plugin replaces src and srcsets with inline placeholders and appends a script to lazy load the real sources when the images intersect with the viewport.
 
+Most useful where large image content is added by a site admin through a wysiwyg, a richtext editor, or markdown.
+
 ## Installation
 
 To install, add the following lines to your `netlify.toml` file:
