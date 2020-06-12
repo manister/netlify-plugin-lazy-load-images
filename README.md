@@ -18,7 +18,6 @@ Note: The `[[plugins]]` line is required for each plugin, even if you have other
 ```toml
 [[plugins]]
 package = "netlify-plugin-lazy-load-images"
-
   [plugins.inputs]
   paletteSize = 1
   exclude = []

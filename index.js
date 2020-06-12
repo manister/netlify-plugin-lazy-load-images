@@ -4,8 +4,8 @@ const glob = require("glob")
 const handleSrcs = require('./lib/handleSrcs')
 const handleSrcsets = require('./lib/handleSrcsets')
 
-const lazyLoadScript = fs.readFileSync('./client/dist/lazyLoad.js')
-const scriptToInject = `<script type="text/javascript">${lazyLoadScript}</script>`
+const { script } = require('./client/lazyLoadClientScipt.json')
+const scriptToInject = `<script type="text/javascript">${script}</script>`
 
 module.exports = {
   onSuccess: async ({ inputs, constants, utils }) => {
