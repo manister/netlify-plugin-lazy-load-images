@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "name": "netlify-plugin-lazy-load-images",
   "description": "Build plugin to implement lazy-loading images after a build.",
   "main": "index.js",
