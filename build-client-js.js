@@ -17,7 +17,7 @@ const buildClientJs = async () => {
   } catch (err) {
     console.error(err)
   }
-  fs.writeFileSync('client/lazyLoadClientScipt.json', jsonified, 'utf-8')
+  fs.writeFileSync('client/lazyLoadClientScript.json', jsonified, 'utf-8')
 }
 
 buildClientJs()
