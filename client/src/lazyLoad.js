@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", () => {
           let lazyImage = entry.target;
           if (lazyImage.dataset.lazySrc) {
             lazyImage.src = lazyImage.dataset.lazySrc;
-            lazyImage.removeAttribute("lazy-src");
+            lazyImage.removeAttribute("data-lazy-src");
           }
           if (lazyImage.dataset.lazySrcset) {
             lazyImage.srcset = lazyImage.dataset.lazySrcset;
-            lazyImage.removeAttribute("lazy-srcset");
+            lazyImage.removeAttribute("data-lazy-srcset");
           }
           lazyImageObserver.unobserve(lazyImage);
         }
