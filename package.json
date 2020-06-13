@@ -1,15 +1,20 @@
 {
   "version": "0.0.7",
   "name": "netlify-plugin-lazy-load-images",
-  "description": "Build plugin to implement lazy-loading images after a build.",
+  "description": "Build plugin to implement lazy-loading images.",
   "main": "index.js",
+  "keywords": [
+    "lazy load",
+    "netlify",
+    "netlify-plugin"
+  ],
   "scripts": {
     "build-test-site": "node build-test-site.js",
     "build-client-js": "node build-client-js.js",
     "prepare": "npm run build-client-js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "canvas": "^2.6.1",
     "colorthief": "^2.3.0",
