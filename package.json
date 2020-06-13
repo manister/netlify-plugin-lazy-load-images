@@ -2,6 +2,11 @@
   "version": "0.0.9",
   "name": "netlify-plugin-lazy-load-images",
   "description": "Build plugin to implement lazy-loading images.",
+  "homepage": "https://github.com/manister/netlify-plugin-lazy-load-images#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manister/netlify-plugin-lazy-load-images.git"
+  },
   "main": "index.js",
   "keywords": [
     "lazy load",
