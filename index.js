@@ -4,7 +4,7 @@ const glob = require("glob")
 const handleSrcs = require('./lib/handleSrcs')
 const handleSrcsets = require('./lib/handleSrcsets')
 
-const { script } = require('./client/lazyLoadClientScipt.json')
+const { script } = require('./client/lazyLoadClientScript.json')
 const scriptToInject = `<script type="text/javascript">${script}</script>`
 
 module.exports = {
