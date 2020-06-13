@@ -3,4 +3,4 @@
 [[plugins]]
 package = "."
   [plugins.inputs]
-    exclude = ["exclude/**"]
+    exclude = ["/exclude/**"]
