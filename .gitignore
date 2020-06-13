@@ -3,3 +3,4 @@ node_modules
 client/lazyLoadClientScript.json
 # Local Netlify folder
 .netlify
+.DS_STORE

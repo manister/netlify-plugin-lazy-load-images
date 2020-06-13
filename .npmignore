@@ -1,1 +1,7 @@
 /test-site
+dist
+client/src
+node_modules
+build-test-site.js
+build-client-js.js
+netlify.toml
