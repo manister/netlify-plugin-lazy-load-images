@@ -1,9 +1,13 @@
 name: netlify-plugin-lazy-load-images
 inputs:
-  - name: exclude
-    description: globs to exclude from applying lazy load
+  - name: excludeFiles
+    description: globs to exclude files from applying lazy load
     required: false
     default: []
+  - name: excludeElements
+    description: css selector to exclude elements from applying lazy load
+    required: false
+    default: '[data-src], .lazy-load'
   - name: paletteSize
     description: number of colours to load in the base64 placeholder
     default: 1

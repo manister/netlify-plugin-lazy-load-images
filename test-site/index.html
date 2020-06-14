@@ -9,7 +9,7 @@
 <body>
   <h1>External Images</h1>
 
-  <img alt="alt text"
+  <img alt="alt text" class="lazy-load"
     src="https://images.unsplash.com/photo-1591795741155-03bd2065944c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
   <img alt="alt text"
     src="https://images.unsplash.com/photo-1590660058203-d7f3599c0edf?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
@@ -17,10 +17,10 @@
     src="https://images.unsplash.com/photo-1590219064212-2afc410c1219?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
 
   <h1>Local Images</h1>
-  <img src="/beach.jpg" alt="alt text">
+  <img src="/beach.jpg" class="lazy" alt="alt text">
   <img alt="alt text" src="/blm.jpg">
   <img alt="alt text" src="/bike.jpg">
-  <img alt="alt text" src="/example.svg">
+  <img alt="alt text" data-src="/larger-image.svg" src="/example.svg">
 
 
   <h1>With srcsets</h1>
