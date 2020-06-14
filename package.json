@@ -23,9 +23,11 @@
   "dependencies": {
     "canvas": "^2.6.1",
     "colorthief": "^2.3.0",
+    "filesize": "^6.1.0",
     "glob": "^7.1.6",
     "imagemin": "^7.0.1",
     "imagemin-pngquant": "^9.0.0",
+    "node-fetch": "^2.6.0",
     "node-html-parser": "^1.2.19",
     "srcset": "^2.0.1"
   },
