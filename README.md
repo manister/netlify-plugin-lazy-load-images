@@ -22,13 +22,18 @@ Note: The `[[plugins]]` line is required for each plugin, even if you have other
 package = "netlify-plugin-lazy-load-images"
   [plugins.inputs]
   paletteSize = 1
-  exclude = []
+  excludeFiles = []
+  excludeElements = '.lazy, .lazy-load, [data-src]'
 ```
 
 ### paletteSize
 
-Number. Number of colours to fetch from souce image when creating the placeholder.
+Number. Number of colours to fetch from souce image when creating the placeholder. Defaults to 1.
 
-### exclude
+### excludeFiles
 
-Array. Array of glob patterns to exclude from processing by this plugin.
+Array. Array of glob patterns to exclude from processing by this plugin. Defaults to [].
+
+### excludeElements
+
+String. CSS selector to match on elements to be excluded from lazy-loading. Defaults to selectors used in popular lazy-loading libraries. '.lazy, .lazy-load, \[data-src\]'
