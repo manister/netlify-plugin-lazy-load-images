@@ -1,8 +1,8 @@
 
-const imagemin = require('imagemin');
-const imageminPngquant = require('imagemin-pngquant');
-const { createCanvas, loadImage } = require("canvas");
-const ColorThief = require('colorthief');
+import * as imagemin from 'imagemin'
+import imageminPngquant from 'imagemin-pngquant'
+import { createCanvas, loadImage } from "canvas"
+import ColorThief from 'colorthief'
 
 const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
   const hex = x.toString(16)
@@ -44,4 +44,4 @@ const getPlaceHolder = async (imageURL, { paletteSize }) => {
 
 }
 
-module.exports = getPlaceHolder;
+export default getPlaceHolder;

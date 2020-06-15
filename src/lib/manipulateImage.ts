@@ -1,10 +1,10 @@
-const imageUrlToPlaceholder = require('./imageUrlToPlaceholder')
-const transformImageUrl = require('./transformImageUrl')
-const srcset = require('srcset')
-const fetch = require('node-fetch')
-const fs = require('fs')
+import imageUrlToPlaceholder from './imageUrlToPlaceholder'
+import transformImageUrl from './transformImageUrl'
+import * as srcset from 'srcset'
+import fetch from 'node-fetch'
+import * as fs from 'fs'
 
-const isAbsoluteUrl = require('./isAbsoluteUrl')
+import isAbsoluteUrl from './isAbsoluteUrl'
 
 const getRemoteFileSize = async (url) => {
   const res = await fetch(url, { method: 'HEAD' })
@@ -17,13 +17,12 @@ const getFileSize = async (url) => {
     return isAbsoluteUrl(url) ? await getRemoteFileSize(url) : fs.statSync(url).size;
   } catch (e) {
     console.warn(`Could\'t get file size for ${url}`)
-    return url
+    return 0
   }
 }
 
 
-const manipulateImage = async (image, cfg) => {
-  const { dir, paletteSize, filePath, replaceThreshold } = cfg
+const manipulateImage = async (image, { dir, paletteSize, filePath, replaceThreshold }) => {
   const imgSrc = image.getAttribute('src')
   const imgSrcset = image.getAttribute('srcset')
   const transformedImgSrc = imgSrc ? transformImageUrl(imgSrc, dir, filePath) : null;
@@ -75,5 +74,4 @@ const manipulateImage = async (image, cfg) => {
 
   return ret.filter(item => item)
 }
-
-module.exports = manipulateImage
+export default manipulateImage

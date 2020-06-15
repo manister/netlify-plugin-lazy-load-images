@@ -1,10 +1,11 @@
-const { parse } = require('node-html-parser');
-const fs = require('fs');
+import { parse } from 'node-html-parser';
+import * as fs from 'fs'
 
-const filterImages = require('./filterImages')
-const manipulateImage = require('./manipulateImage')
 
-const { script } = require('../client/lazyLoadClientScript.json')
+import filterImages from './filterImages'
+import manipulateImage from './manipulateImage'
+
+import { script } from '../../client/lazyLoadClientScript.json'
 
 const scriptToInject = parse(`<script type="text/javascript">${script}</script>`, { script: true })
 
@@ -29,4 +30,4 @@ const transformFileData = ({ excludeElements, dir, paletteSize, replaceThreshold
   }
 }
 
-module.exports = transformFileData
+export default transformFileData

@@ -1,4 +1,4 @@
-const path = require('path')
+import * as path from 'path'
 
 const resolveImagePath = (rootDir, filePath, srcPath) =>
   path.join(
@@ -15,4 +15,4 @@ const resolveImagePath = (rootDir, filePath, srcPath) =>
     )
   )
 
-module.exports = resolveImagePath
+export default resolveImagePath

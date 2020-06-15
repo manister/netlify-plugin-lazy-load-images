@@ -1,4 +1,4 @@
-const { parse } = require('node-html-parser');
+import parse from 'node-html-parser'
 
 const filterImages = (images, selectorList) => {
   //node-html-parser query selector doesn't understand comma seperated selectors
@@ -10,4 +10,5 @@ const filterImages = (images, selectorList) => {
   })
 }
 
-module.exports = filterImages
+export default filterImages
+
