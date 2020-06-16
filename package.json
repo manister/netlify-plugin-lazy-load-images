@@ -21,7 +21,8 @@
   "author": "",
   "license": "MIT",
   "files": [
-    "dist/index.js"
+    "dist/index.js",
+    "manifest.yml"
   ],
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
