@@ -11,3 +11,6 @@ inputs:
   - name: paletteSize
     description: number of colours to load in the base64 placeholder
     default: 1
+  - name: replaceThreshold
+    description: size in bytes for an image to be in order to be replaced by placeholder
+    default: 0

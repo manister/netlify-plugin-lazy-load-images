@@ -37,3 +37,8 @@ Array. Array of glob patterns to exclude from processing by this plugin. Default
 ### excludeElements
 
 String. CSS selector to match on elements to be excluded from lazy-loading. Defaults to selectors used in popular lazy-loading libraries. '.lazy, .lazy-load, \[data-src\]'
+
+### replaceThreshold
+
+Number. Miniumum size in bytes for an image to be replaced by placeholder
+
