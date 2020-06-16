@@ -2,17 +2,17 @@ import imageUrlToPlaceholder from './imageUrlToPlaceholder'
 import transformImageUrl from './transformImageUrl'
 import * as srcset from 'srcset'
 import fetch from 'node-fetch'
-import * as fs from 'fs'
+import * as fs from 'fs';
 
 import isAbsoluteUrl from './isAbsoluteUrl'
 
-const getRemoteFileSize = async (url) => {
+const getRemoteFileSize = async (url: string) => {
   const res = await fetch(url, { method: 'HEAD' })
   const size = await res.headers.get('content-length')
-  return parseInt(size)
+  return size ? parseInt(size) : 0;
 }
 
-const getFileSize = async (url) => {
+const getFileSize = async (url: string) => {
   try {
     return isAbsoluteUrl(url) ? await getRemoteFileSize(url) : fs.statSync(url).size;
   } catch (e) {
@@ -21,15 +21,15 @@ const getFileSize = async (url) => {
   }
 }
 
+type ManipulateImageOptions = { dir: string, paletteSize: number, filePath: string, replaceThreshold: number }
 
-const manipulateImage = async (image, { dir, paletteSize, filePath, replaceThreshold }) => {
+const manipulateImage = async (image: HTMLElement, { dir, paletteSize, filePath, replaceThreshold }: ManipulateImageOptions) => {
   const imgSrc = image.getAttribute('src')
   const imgSrcset = image.getAttribute('srcset')
   const transformedImgSrc = imgSrc ? transformImageUrl(imgSrc, dir, filePath) : null;
   const imgFileSize = transformedImgSrc ? await getFileSize(transformedImgSrc) : 0;
   const updatedSrc = transformedImgSrc && imgFileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedImgSrc, paletteSize) : null;
-
-  if (updatedSrc) {
+  if (imgSrc && updatedSrc) {
     image.setAttribute('src', updatedSrc)
     image.setAttribute('data-lazy-src', imgSrc)
   }
@@ -62,16 +62,16 @@ const manipulateImage = async (image, { dir, paletteSize, filePath, replaceThres
       ? srcset.stringify(updatedImgSrcsetParsed)
       : null;
 
-  if (updatedImgSrcset) {
+  if (imgSrcset && updatedImgSrcset) {
     image.setAttribute('srcset', updatedImgSrcset)
     image.setAttribute('data-lazy-srcset', imgSrcset)
   }
 
   const ret = [
-    transformedImgSrc && updatedSrc && imgFileSize ? { url: transformedImgSrc, fileSize: imgFileSize } : null,
-    ...(imgSrscetParsedUrlsTransformed && updatedImgSrcset ? imgSrscetParsedUrlsTransformed.map(({ url, fileSize }) => { url, fileSize }) : [])
+    transformedImgSrc && updatedSrc && imgFileSize ? { url: transformedImgSrc, fileSize: imgFileSize } : { url: 'file not updated', fileSize: 0 },
+    ...(imgSrscetParsedUrlsTransformed && updatedImgSrcset ? imgSrscetParsedUrlsTransformed.map(({ url, fileSize }) => ({ url, fileSize })) : [])
   ]
 
-  return ret.filter(item => item)
+  return ret.filter(update => update.url && update.fileSize)
 }
 export default manipulateImage

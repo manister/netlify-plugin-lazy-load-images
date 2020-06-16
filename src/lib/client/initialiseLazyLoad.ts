@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const lazyImages = [...document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]")];
+const initialiseLazyLoad = () => {
+  const lazyImages = document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]")
   if ("IntersectionObserver" in window) {
     let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
       entries.forEach(function (entry) {
@@ -27,4 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
       lazyImage.removeAttribute("lazy-src");
     })
   }
-});
+}
+
+export default initialiseLazyLoad

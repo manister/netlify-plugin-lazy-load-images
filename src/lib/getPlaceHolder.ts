@@ -1,24 +1,25 @@
-
-import * as imagemin from 'imagemin'
+import * as imagemin from 'imagemin';
 import imageminPngquant from 'imagemin-pngquant'
-import { createCanvas, loadImage } from "canvas"
-import ColorThief from 'colorthief'
+import { createCanvas, loadImage } from 'canvas'
+import * as ColorThief from 'colorthief'
 
-const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+type RGBColour = [number, number, number]
+
+const rgbToHex = ([r, g, b]: RGBColour) => '#' + [r, g, b].map(x => {
   const hex = x.toString(16)
   return hex.length === 1 ? '0' + hex : hex
 }).join('');
 
-const getColours = async (url, count) => {
+const getColours = async (url: string, count: number) => {
   try {
-    colours = count > 1 ? await ColorThief.getPalette(url, count) : [await ColorThief.getColor(url)]
-    return colours.map(colour => rgbToHex(...colour))
+    const colours = count > 1 ? await ColorThief.getPalette(url, count) : [await ColorThief.getColor(url)]
+    return (colours as Array<RGBColour>).map(colour => rgbToHex(colour))
   } catch (e) {
     return []
   }
 }
 
-const getPlaceHolder = async (imageURL, { paletteSize }) => {
+const getPlaceHolder = async (imageURL: string, { paletteSize }: { paletteSize: number }) => {
 
   const image = await loadImage(imageURL)
   const colours = await getColours(imageURL, paletteSize)

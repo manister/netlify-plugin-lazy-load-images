@@ -1,6 +1,6 @@
 import * as path from 'path'
 
-const resolveImagePath = (rootDir, filePath, srcPath) =>
+const resolveImagePath = (rootDir: string, filePath: string, srcPath: string) =>
   path.join(
     rootDir,
     path.resolve(

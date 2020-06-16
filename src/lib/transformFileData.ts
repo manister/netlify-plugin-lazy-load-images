@@ -1,22 +1,28 @@
-import { parse } from 'node-html-parser';
+import { parse } from 'node-html-parser'
 import * as fs from 'fs'
-
 
 import filterImages from './filterImages'
 import manipulateImage from './manipulateImage'
 
-import { script } from '../../client/lazyLoadClientScript.json'
+import initialiseLazyLoad from './client/initialiseLazyLoad'
 
-const scriptToInject = parse(`<script type="text/javascript">${script}</script>`, { script: true })
+const scriptToInject = parse(`<script type="text/javascript">document.addEventListener('DOMContentLoaded', ${initialiseLazyLoad.toString()})</script>`, { script: true })
 
-const parseHTML = (html) => parse(html, {
+const parseHTML = (html: string) => parse(html, {
   script: true,
   style: true,
   pre: true,
   comment: true
 })
 
-const transformFileData = ({ excludeElements, dir, paletteSize, replaceThreshold }) => async (filePath) => {
+type TransformFileDataCfg = {
+  excludeElements: string,
+  dir: string,
+  paletteSize: number,
+  replaceThreshold: number
+}
+
+const transformFileData = ({ excludeElements, dir, paletteSize, replaceThreshold }: TransformFileDataCfg) => async (filePath: string) => {
   const fileData = fs.readFileSync(filePath)
   const fileDataString = fileData.toString();
   const document = parseHTML(fileDataString)
