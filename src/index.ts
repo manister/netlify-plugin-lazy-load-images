@@ -1,17 +1,30 @@
-const fs = require('fs');
-const glob = require("glob")
-const transformFileData = require('./lib/transformFileData')
-const getFileSize = require('filesize')
+import * as fs from 'fs';
+import * as glob from "glob"
+import * as formatFileSize from 'filesize'
+import transformFileData from './lib/transformFileData'
 
-module.exports = {
-  onSuccess: async ({ inputs, constants, utils }) => {
-    const { excludeFiles, excludeElements, paletteSize, } = inputs
+type SuccessArgs = {
+  inputs: {
+    excludeFiles: Array<string>,
+    excludeElements: string,
+    paletteSize: number,
+    replaceThreshold: number
+  },
+  constants: {
+    PUBLISH_DIR: string
+  },
+  utils: any
+}
+
+export default {
+  onSuccess: async ({ inputs, constants, utils }: SuccessArgs) => {
+    const { excludeFiles, excludeElements, paletteSize, replaceThreshold } = inputs
     const transformFileDataWithCfg = transformFileData(
       {
         excludeElements,
         dir: constants.PUBLISH_DIR,
         paletteSize,
-        replaceThreshold: parseInt(inputs.replaceThreshold)
+        replaceThreshold: replaceThreshold
       }
     )
     try {
@@ -28,24 +41,20 @@ module.exports = {
       ))
       console.log('---')
       const grandTotal = results.reduce((grandAcca, { file, updates, difference }) => {
-        const { total } = updates.reduce(({ total, obj }, { url, fileSize }) => (
+        const { total } = updates.reduce(({ total, obj }: { total: number, obj: { [url: string]: number } }, { url, fileSize }) => (
           {
             obj: { ...obj, [url]: fileSize },
             total: obj[url] ? total : total + fileSize
           }
         ), { total: 0, obj: {} })
         console.log('---')
-        console.log(`Inline placeholders on ${file} have ${difference > 0 ? 'added' : 'reduced size by'} ${getFileSize(Math.abs(difference))}`)
-        console.log(`Image requests on ${file} reduced by ${getFileSize(total)}`)
+        console.log(`Inline placeholders on ${file} have ${difference > 0 ? 'added' : 'reduced size by'} ${formatFileSize(Math.abs(difference))}`)
+        console.log(`Image requests on ${file} reduced by ${formatFileSize(total)}`)
         console.log('---')
         return grandAcca + total;
       }, 0)
       console.log('---')
-      console.log(`Total image requests reduced by ${getFileSize(grandTotal)}`)
-
-
-
-
+      console.log(`Total image requests reduced by ${formatFileSize(grandTotal)}`)
     } catch (error) {
       utils.build.failPlugin('The Lazy Load plugin failed.', { error })
     }

@@ -1,4 +1,5 @@
 dist
+out
 node_modules
 client/lazyLoadClientScript.json
 # Local Netlify folder
