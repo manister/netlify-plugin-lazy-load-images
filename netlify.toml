@@ -4,4 +4,4 @@
 package = "."
   [plugins.inputs]
     excludeFiles = ["/exclude/**"]
-    paletteSize =  7
+    paletteSize =  5

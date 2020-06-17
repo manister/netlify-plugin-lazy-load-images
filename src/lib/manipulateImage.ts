@@ -1,6 +1,6 @@
 import imageUrlToPlaceholder from './imageUrlToPlaceholder'
 import transformImageUrl from './transformImageUrl'
-import * as srcset from 'srcset'
+import srcset from 'srcset'
 import fetch from 'node-fetch'
 import * as fs from 'fs';
 
