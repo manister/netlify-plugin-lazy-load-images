@@ -1,10 +1,10 @@
 const initialiseLazyLoad = () => {
-  const lazyImages = document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]")
+  const lazyImages: NodeListOf<HTMLImageElement | HTMLSourceElement> = document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]")
   if ("IntersectionObserver" in window) {
     let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          let lazyImage = entry.target;
+          let lazyImage = entry.target as (HTMLImageElement | HTMLSourceElement);
           if (lazyImage.dataset.lazySrc) {
             lazyImage.src = lazyImage.dataset.lazySrc;
             lazyImage.removeAttribute("data-lazy-src");
@@ -23,7 +23,9 @@ const initialiseLazyLoad = () => {
   } else {
     lazyImages.forEach(function (lazyImage) {
       //instantly replace
-      lazyImage.src = lazyImage.dataset.lazySrc;
+      if (lazyImage.dataset.lazySrc) {
+        lazyImage.src = lazyImage.dataset.lazySrc;
+      }
       lazyImage.removeAttribute("lazy-src");
     })
   }

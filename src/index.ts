@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as glob from "glob"
-import * as formatFileSize from 'filesize'
+import filesize from 'filesize'
 import transformFileData from './lib/transformFileData'
 
 type SuccessArgs = {
@@ -48,13 +48,13 @@ export default {
           }
         ), { total: 0, obj: {} })
         console.log('---')
-        console.log(`Inline placeholders on ${file} have ${difference > 0 ? 'added' : 'reduced size by'} ${formatFileSize(Math.abs(difference))}`)
-        console.log(`Image requests on ${file} reduced by ${formatFileSize(total)}`)
+        console.log(`Inline placeholders on ${file} have ${difference > 0 ? 'added' : 'reduced size by'} ${filesize(Math.abs(difference))}`)
+        console.log(`Image requests on ${file} reduced by ${filesize(total)}`)
         console.log('---')
         return grandAcca + total;
       }, 0)
       console.log('---')
-      console.log(`Total image requests reduced by ${formatFileSize(grandTotal)}`)
+      console.log(`Total image requests reduced by ${filesize(grandTotal)}`)
     } catch (error) {
       utils.build.failPlugin('The Lazy Load plugin failed.', { error })
     }
