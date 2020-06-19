@@ -8,16 +8,9 @@ const getImageDimensions = async (url) => {
   return { width, height }
 }
 
-const getPlaceHolder = async (imageURL: string, { paletteSize }: { paletteSize: number }) => {
-  const vibrantColours = await Vibrant.from(imageURL).getPalette()
-  const colourArray = Object.values(vibrantColours)
-  const hexes = colourArray
-    .sort((c1, c2) => c1 && c2 ? c2.getPopulation() - c1.getPopulation() : 0)
-    .flatMap(colour => colour ? [colour.getHex()] : [])
-  const colours = hexes.slice(0, paletteSize)
-  const { width, height } = await getImageDimensions(imageURL)
-  const rectHeight = height / colours.length;
-  const svg = `
+const createPlaceHolderSVG = (width: number, height: number, colours: Array<string>) => {
+  const rectHeight = height / colours.length; // calculate height of rectactangles that will make up placeholder
+  return `
   <svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="f1" x="0" y="0">
@@ -28,8 +21,18 @@ const getPlaceHolder = async (imageURL: string, { paletteSize }: { paletteSize: 
     ${colours.map((colour, i) => `<rect y="${i * rectHeight}" width="${width}" height="${rectHeight}" fill="${colour}"></rect>`)}
   </g>
   </svg>`
-  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
 
+const getPlaceHolder = async (imageURL: string, { paletteSize }: { paletteSize: number }) => {
+  const vibrantColours = await Vibrant.from(imageURL).getPalette()
+  const colourArray = Object.values(vibrantColours)
+  const hexes = colourArray
+    .sort((c1, c2) => c1 && c2 ? c2.getPopulation() - c1.getPopulation() : 0) // order by colour frequency in image
+    .flatMap(colour => colour ? [colour.getHex()] : []) // remove null values if they exist
+  const colours = hexes.slice(0, paletteSize) // cut array off at paletteSize as these are the only colours we'll need
+  const { width, height } = await getImageDimensions(imageURL) // get the wdith and height
+  const svg = createPlaceHolderSVG(width, height, colours)
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
 export default getPlaceHolder;

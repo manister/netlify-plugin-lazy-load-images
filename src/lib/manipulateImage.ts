@@ -29,11 +29,11 @@ const manipulateImage = async (image: HTMLElement, { dir, paletteSize, filePath,
   const transformedImgSrc = imgSrc ? transformImageUrl(imgSrc, dir, filePath) : null;
   const imgFileSize = transformedImgSrc ? await getFileSize(transformedImgSrc) : 0;
   const updatedSrc = transformedImgSrc && imgFileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedImgSrc, paletteSize) : null;
+
   if (imgSrc && updatedSrc) {
     image.setAttribute('src', updatedSrc)
     image.setAttribute('data-lazy-src', imgSrc)
   }
-
   const imgSrcsetParsed = imgSrcset ? srcset.parse(imgSrcset) : [];
 
   const imgSrscetParsedUrlsTransformed = await Promise.all(imgSrcsetParsed.map(async srcsetObj => {
@@ -67,11 +67,11 @@ const manipulateImage = async (image: HTMLElement, { dir, paletteSize, filePath,
     image.setAttribute('data-lazy-srcset', imgSrcset)
   }
 
-  const ret = [
+  return [
     transformedImgSrc && updatedSrc && imgFileSize ? { url: transformedImgSrc, fileSize: imgFileSize } : { url: 'file not updated', fileSize: 0 },
     ...(imgSrscetParsedUrlsTransformed && updatedImgSrcset ? imgSrscetParsedUrlsTransformed.map(({ url, fileSize }) => ({ url, fileSize })) : [])
   ]
 
-  return ret.filter(update => update.url && update.fileSize)
+
 }
 export default manipulateImage
