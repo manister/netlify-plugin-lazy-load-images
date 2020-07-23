@@ -1,2 +1,2 @@
-const copydir = require('copy-dir')
-copydir.sync('test-site', 'out')
+const copydir = require('copy-dir');
+copydir.sync('test-site', 'out');
