@@ -23,9 +23,9 @@ const getFileSize = async (url: string) => {
 
 
 
-type ManipulateImageOptions = { dir: string, paletteSize: number, filePath: string, replaceThreshold: number }
+type ManipulateImageOptions = { dir: string, filePath: string, replaceThreshold: number }
 
-const manipulateImage = async (image: HTMLElement, { dir, paletteSize, filePath, replaceThreshold }: ManipulateImageOptions) => {
+const manipulateImage = async (image: HTMLElement, { dir, filePath, replaceThreshold }: ManipulateImageOptions) => {
 
   //for logging, capture all urls and filesizes saved:
   const reducedByLogOutput : {[filename: string] : number } = {} 
@@ -34,7 +34,7 @@ const manipulateImage = async (image: HTMLElement, { dir, paletteSize, filePath,
   const imgSrcset = image.getAttribute('srcset')
   const transformedImgSrc = imgSrc ? transformImageUrl(imgSrc, dir, filePath) : '';
   const imgFileSize = transformedImgSrc ? await getFileSize(transformedImgSrc) : -1;
-  const updatedSrc = imgFileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedImgSrc, paletteSize) : '';
+  const updatedSrc = imgFileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedImgSrc) : '';
   if (imgSrc && imgFileSize > replaceThreshold) {
     reducedByLogOutput[imgSrc] = imgFileSize;
   }
@@ -43,7 +43,7 @@ const manipulateImage = async (image: HTMLElement, { dir, paletteSize, filePath,
       .map(async srcsetObj => {
         const transformedUrl = transformImageUrl(srcsetObj.url, dir, filePath)
         const fileSize = await getFileSize(transformedUrl)
-        const url = fileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedUrl, paletteSize) : transformedUrl
+        const url = fileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedUrl) : transformedUrl
         if (fileSize > replaceThreshold) {
           reducedByLogOutput[srcsetObj.url] = fileSize;
         }

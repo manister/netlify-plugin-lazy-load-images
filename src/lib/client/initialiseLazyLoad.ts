@@ -1,7 +1,7 @@
 const initialiseLazyLoad = () => {
   const lazyImages: NodeListOf<HTMLImageElement | HTMLSourceElement> = document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]")
   if ("IntersectionObserver" in window) {
-    let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+    let lazyImageObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           let lazyImage = entry.target as (HTMLImageElement | HTMLSourceElement);

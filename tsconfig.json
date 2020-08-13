@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "noImplicitAny": false,
     "lib": [
       "es2019",

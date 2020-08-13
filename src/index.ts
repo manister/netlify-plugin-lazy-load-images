@@ -9,7 +9,6 @@ type SuccessArgs = {
   inputs: {
     excludeFiles: Array<string>,
     excludeElements: string,
-    paletteSize: number,
     replaceThreshold: number
   },
   constants: {
@@ -18,13 +17,9 @@ type SuccessArgs = {
   utils: any
 }
 
-
-
-
-
 export default {
   onSuccess: async ({ inputs, constants, utils }: SuccessArgs) => {
-    const { excludeFiles, excludeElements, paletteSize, replaceThreshold } = inputs
+    const { excludeFiles, excludeElements, replaceThreshold } = inputs
     try {
       const files: string[] = glob.sync(`${constants.PUBLISH_DIR}/**/*.html`, {
         ignore: excludeFiles.map(exclusion => exclusion.indexOf('/') === 0 ? `${constants.PUBLISH_DIR}${exclusion}` : exclusion)
@@ -34,7 +29,6 @@ export default {
           filePath,
           excludeElements,
           dir: constants.PUBLISH_DIR,
-          paletteSize,
           replaceThreshold
         })
         const totalForFileLogged = filesize(sum(Object.values(log)));

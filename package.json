@@ -25,12 +25,11 @@
     "manifest.yml"
   ],
   "dependencies": {
+    "canvas": "^2.6.1",
     "filesize": "^6.1.0",
     "glob": "^7.1.6",
     "node-fetch": "^2.6.0",
     "node-html-parser": "^1.2.19",
-    "node-vibrant": "^3.1.5",
-    "probe-image-size": "^5.0.0",
     "srcset": "^2.0.1"
   },
   "devDependencies": {

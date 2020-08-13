@@ -21,19 +21,18 @@ type TransformFileDataCfg = {
   filePath: string,
   excludeElements: string,
   dir: string,
-  paletteSize: number,
   replaceThreshold: number
 }
 
 
-const transformFileData = async ({ filePath, excludeElements, dir, paletteSize, replaceThreshold }: TransformFileDataCfg) => {
+const transformFileData = async ({ filePath, excludeElements, dir, replaceThreshold }: TransformFileDataCfg) => {
   const fileData = fs.readFileSync(filePath)
   const fileDataString = fileData.toString();
   const parsed = parseHTML(fileDataString)
   const document = (parsed as unknown as HTMLElement)
   const images = document.querySelectorAll<HTMLImageElement | HTMLSourceElement>('img, source')
   const filteredImages = filterImages(Array.from(images), excludeElements)
-  const logs = await Promise.all([...filteredImages].map(async image => await manipulateImage(image, { dir, filePath, paletteSize, replaceThreshold })));
+  const logs = await Promise.all([...filteredImages].map(async image => await manipulateImage(image, { dir, filePath, replaceThreshold })));
   document.appendChild(scriptToInject as unknown as HTMLElement)
   const updatedFileData = document.toString()
   fs.writeFileSync(filePath, updatedFileData)

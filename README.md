@@ -21,14 +21,9 @@ Note: The `[[plugins]]` line is required for each plugin, even if you have other
 [[plugins]]
 package = "netlify-plugin-lazy-load-images"
   [plugins.inputs]
-  paletteSize = 1
   excludeFiles = []
   excludeElements = '.lazy, .lazy-load, [data-src]'
 ```
-
-### paletteSize
-
-Number. Number of colours to fetch from souce image when creating the placeholder. Defaults to 1.
 
 ### excludeFiles
 
