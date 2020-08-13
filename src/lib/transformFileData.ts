@@ -6,6 +6,8 @@ import manipulateImage from './manipulateImage'
 
 import initialiseLazyLoad from './client/initialiseLazyLoad'
 
+import mergeLogObjArray from './mergeLogObjArray'
+
 const scriptToInject = parse(`<script type="text/javascript">document.addEventListener('DOMContentLoaded', ${initialiseLazyLoad.toString()})</script>`, { script: true })
 
 const parseHTML = (html: string) => parse(html, {
@@ -16,6 +18,7 @@ const parseHTML = (html: string) => parse(html, {
 })
 
 type TransformFileDataCfg = {
+  filePath: string,
   excludeElements: string,
   dir: string,
   paletteSize: number,
@@ -23,20 +26,18 @@ type TransformFileDataCfg = {
 }
 
 
-
-const transformFileData = ({ excludeElements, dir, paletteSize, replaceThreshold }: TransformFileDataCfg) => async (filePath: string) => {
+const transformFileData = async ({ filePath, excludeElements, dir, paletteSize, replaceThreshold }: TransformFileDataCfg) => {
   const fileData = fs.readFileSync(filePath)
   const fileDataString = fileData.toString();
   const parsed = parseHTML(fileDataString)
   const document = (parsed as unknown as HTMLElement)
   const images = document.querySelectorAll<HTMLImageElement | HTMLSourceElement>('img, source')
   const filteredImages = filterImages(Array.from(images), excludeElements)
-  const updates = await Promise.all([...filteredImages].map(async image => await manipulateImage(image, { dir, filePath, paletteSize, replaceThreshold })));
+  const logs = await Promise.all([...filteredImages].map(async image => await manipulateImage(image, { dir, filePath, paletteSize, replaceThreshold })));
   document.appendChild(scriptToInject as unknown as HTMLElement)
-  return {
-    updatedFileData: document.toString(),
-    updates: updates.flat()
-  }
+  const updatedFileData = document.toString()
+  fs.writeFileSync(filePath, updatedFileData)
+  return mergeLogObjArray(logs)
 }
 
 export default transformFileData

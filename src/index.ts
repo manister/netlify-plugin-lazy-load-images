@@ -1,7 +1,9 @@
-import * as fs from 'fs';
-import * as glob from "glob"
+import * as glob from 'glob'
 import filesize from 'filesize'
+import sum from './lib/sum'
 import transformFileData from './lib/transformFileData'
+import mergeLogObjArray from './lib/mergeLogObjArray'
+
 
 type SuccessArgs = {
   inputs: {
@@ -16,45 +18,33 @@ type SuccessArgs = {
   utils: any
 }
 
+
+
+
+
 export default {
   onSuccess: async ({ inputs, constants, utils }: SuccessArgs) => {
     const { excludeFiles, excludeElements, paletteSize, replaceThreshold } = inputs
-    const transformFileDataWithCfg = transformFileData(
-      {
-        excludeElements,
-        dir: constants.PUBLISH_DIR,
-        paletteSize,
-        replaceThreshold: replaceThreshold
-      }
-    )
     try {
-      const files = glob.sync(`${constants.PUBLISH_DIR}/**/*.html`, {
+      const files: string[] = glob.sync(`${constants.PUBLISH_DIR}/**/*.html`, {
         ignore: excludeFiles.map(exclusion => exclusion.indexOf('/') === 0 ? `${constants.PUBLISH_DIR}${exclusion}` : exclusion)
       })
-      const results = await Promise.all(files.map(async file => {
-        const { updatedFileData, updates } = await transformFileDataWithCfg(file)
-        const oldSize = fs.statSync(file).size;
-        fs.writeFileSync(file, updatedFileData)
-        const newSize = fs.statSync(file).size;
-        return { file, updates, difference: newSize - oldSize }
-      }
+      const logs = await Promise.all(files.map(async (filePath: string) => {
+        const log = await transformFileData({
+          filePath,
+          excludeElements,
+          dir: constants.PUBLISH_DIR,
+          paletteSize,
+          replaceThreshold
+        })
+        const totalForFileLogged = filesize(sum(Object.values(log)));
+        console.log(`For ${filePath}, ${totalForFileLogged} in unique requests saved.`)
+        return log;
+       }
       ))
-      console.log('---')
-      const grandTotal = results.reduce((grandAcca, { file, updates, difference }) => {
-        const { total } = updates.reduce(({ total, obj }: { total: number, obj: { [url: string]: number } }, { url, fileSize }) => (
-          {
-            obj: { ...obj, [url]: fileSize },
-            total: obj[url] ? total : total + fileSize
-          }
-        ), { total: 0, obj: {} })
-        console.log('---')
-        console.log(`Inline placeholders on ${file} have ${difference > 0 ? 'added' : 'reduced size by'} ${filesize(Math.abs(difference))}`)
-        console.log(`Image requests on ${file} reduced by ${filesize(total)}`)
-        console.log('---')
-        return grandAcca + total;
-      }, 0)
-      console.log('---')
-      console.log(`Total image requests reduced by ${filesize(grandTotal)}`)
+      const totalLogged = filesize(sum(Object.values(mergeLogObjArray(logs))));
+      console.log(`In total ${totalLogged} in unique requests saved.`)
+
     } catch (error) {
       utils.build.failPlugin('The Lazy Load plugin failed.', { error })
     }

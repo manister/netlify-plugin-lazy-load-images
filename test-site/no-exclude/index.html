@@ -19,27 +19,18 @@
   <h1>Local Images</h1>
   <img src="/beach.jpg" alt="alt text">
   <img alt="alt text" src="/hello.jpg">
-  <img alt="alt text" src="../bike.jpg">
+  <img alt="alt text" src="data:image/svg+xml,%0A%20%20%3Csvg%20viewBox%3D%220%200%201080%201620%22%20width%3D%221080%22%20height%3D%221620%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cfilter%20id%3D%22f1%22%20x%3D%220%22%20y%3D%220%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%2220%2C20%22%20%2F%3E%0A%20%20%20%20%3C%2Ffilter%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cg%20filter%3D%22url(%23f1)%22%3E%0A%20%20%20%20%3Crect%20y%3D%220%22%20width%3D%221080%22%20height%3D%22324%22%20fill%3D%22%23949a9d%22%3E%3C%2Frect%3E%2C%3Crect%20y%3D%22324%22%20width%3D%221080%22%20height%3D%22324%22%20fill%3D%22%23967562%22%3E%3C%2Frect%3E%2C%3Crect%20y%3D%22648%22%20width%3D%221080%22%20height%3D%22324%22%20fill%3D%22%235d4232%22%3E%3C%2Frect%3E%2C%3Crect%20y%3D%22972%22%20width%3D%221080%22%20height%3D%22324%22%20fill%3D%22%2367280c%22%3E%3C%2Frect%3E%2C%3Crect%20y%3D%221296%22%20width%3D%221080%22%20height%3D%22324%22%20fill%3D%22%23e4581a%22%3E%3C%2Frect%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3C%2Fsvg%3E" data-lazy-src="../bike.jpg">
 
   <h1>With srcsets</h1>
 
   <picture>
-    <source media="(max-width: 500px)"
-      srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80">
-    <source media="(min-width: 501px)"
-      srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80">
-    <img
-      src="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80"
+    <source media="(max-width: 500px)" srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80" data-lazy-srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80">
+    <source media="(min-width: 501px)" srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" data-lazy-srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80">
+    <img src="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80"
       alt="alt text">
   </picture>
 
-  <img
-    srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w,
-                           https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w"
-    sizes="(max-width: 600px) 480px,
-                          800px"
-    src="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop"
-    alt="alt text">
+  <img srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w, https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w" sizes="(max-width: 600px) 480px,\\\\\\\\n                          800px" src="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop" alt="alt text" data-lazy-srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w, https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w">
 </body>
 
-</html>
+</html><script type="text/javascript">document.addEventListener('DOMContentLoaded', function(){var e=document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]");if("IntersectionObserver"in window){var t=new IntersectionObserver((function(e,r){e.forEach((function(e){if(e.isIntersecting){var r=e.target;r.dataset.lazySrc&&(r.src=r.dataset.lazySrc,r.removeAttribute("data-lazy-src")),r.dataset.lazySrcset&&(r.srcset=r.dataset.lazySrcset,r.removeAttribute("data-lazy-srcset")),t.unobserve(r)}}))}));e.forEach((function(e){t.observe(e)}))}else e.forEach((function(e){e.dataset.lazySrc&&(e.src=e.dataset.lazySrc),e.removeAttribute("lazy-src")}))})</script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function(){var e=document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]");if("IntersectionObserver"in window){var t=new IntersectionObserver((function(e,r){e.forEach((function(e){if(e.isIntersecting){var r=e.target;r.dataset.lazySrc&&(r.src=r.dataset.lazySrc,r.removeAttribute("data-lazy-src")),r.dataset.lazySrcset&&(r.srcset=r.dataset.lazySrcset,r.removeAttribute("data-lazy-srcset")),t.unobserve(r)}}))}));e.forEach((function(e){t.observe(e)}))}else e.forEach((function(e){e.dataset.lazySrc&&(e.src=e.dataset.lazySrc),e.removeAttribute("lazy-src")}))})</script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function(){var e=document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]");if("IntersectionObserver"in window){var t=new IntersectionObserver((function(e,r){e.forEach((function(e){if(e.isIntersecting){var r=e.target;r.dataset.lazySrc&&(r.src=r.dataset.lazySrc,r.removeAttribute("data-lazy-src")),r.dataset.lazySrcset&&(r.srcset=r.dataset.lazySrcset,r.removeAttribute("data-lazy-srcset")),t.unobserve(r)}}))}));e.forEach((function(e){t.observe(e)}))}else e.forEach((function(e){e.dataset.lazySrc&&(e.src=e.dataset.lazySrc),e.removeAttribute("lazy-src")}))})</script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function(){var e=document.querySelectorAll("[data-lazy-src], [data-lazy-srcset]");if("IntersectionObserver"in window){var t=new IntersectionObserver((function(e,r){e.forEach((function(e){if(e.isIntersecting){var r=e.target;r.dataset.lazySrc&&(r.src=r.dataset.lazySrc,r.removeAttribute("data-lazy-src")),r.dataset.lazySrcset&&(r.srcset=r.dataset.lazySrcset,r.removeAttribute("data-lazy-srcset")),t.unobserve(r)}}))}));e.forEach((function(e){t.observe(e)}))}else e.forEach((function(e){e.dataset.lazySrc&&(e.src=e.dataset.lazySrc),e.removeAttribute("lazy-src")}))})</script>

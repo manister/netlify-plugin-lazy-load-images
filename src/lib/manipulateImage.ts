@@ -8,7 +8,7 @@ import isAbsoluteUrl from './isAbsoluteUrl'
 
 const getRemoteFileSize = async (url: string) => {
   const res = await fetch(url, { method: 'HEAD' })
-  const size = await res.headers.get('content-length')
+  const size = res.headers.get('content-length')
   return size ? parseInt(size) : 0;
 }
 
@@ -16,62 +16,54 @@ const getFileSize = async (url: string) => {
   try {
     return isAbsoluteUrl(url) ? await getRemoteFileSize(url) : fs.statSync(url).size;
   } catch (e) {
-    console.warn(`Could\'t get file size for ${url}`)
+    console.warn("\x1b[31m", `Could\'t determine file size for ${url}.`, "\x1b[32m")
     return 0
   }
 }
 
+
+
 type ManipulateImageOptions = { dir: string, paletteSize: number, filePath: string, replaceThreshold: number }
 
 const manipulateImage = async (image: HTMLElement, { dir, paletteSize, filePath, replaceThreshold }: ManipulateImageOptions) => {
+
+  //for logging, capture all urls and filesizes saved:
+  const reducedByLogOutput : {[filename: string] : number } = {} 
+
   const imgSrc = image.getAttribute('src')
   const imgSrcset = image.getAttribute('srcset')
-  const transformedImgSrc = imgSrc ? transformImageUrl(imgSrc, dir, filePath) : null;
-  const imgFileSize = transformedImgSrc ? await getFileSize(transformedImgSrc) : 0;
-  const updatedSrc = transformedImgSrc && imgFileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedImgSrc, paletteSize) : null;
+  const transformedImgSrc = imgSrc ? transformImageUrl(imgSrc, dir, filePath) : '';
+  const imgFileSize = transformedImgSrc ? await getFileSize(transformedImgSrc) : -1;
+  const updatedSrc = imgFileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedImgSrc, paletteSize) : '';
+  if (imgSrc && imgFileSize > replaceThreshold) {
+    reducedByLogOutput[imgSrc] = imgFileSize;
+  }
+  const updatedImgSrcset = imgSrcset ? srcset.stringify(
+    await Promise.all(srcset.parse(imgSrcset)
+      .map(async srcsetObj => {
+        const transformedUrl = transformImageUrl(srcsetObj.url, dir, filePath)
+        const fileSize = await getFileSize(transformedUrl)
+        const url = fileSize > replaceThreshold ? await imageUrlToPlaceholder(transformedUrl, paletteSize) : transformedUrl
+        if (fileSize > replaceThreshold) {
+          reducedByLogOutput[srcsetObj.url] = fileSize;
+        }
+        return {
+          ...srcsetObj,
+          url,
+        }
+  }))) : '';
+
 
   if (imgSrc && updatedSrc) {
     image.setAttribute('src', updatedSrc)
     image.setAttribute('data-lazy-src', imgSrc)
   }
-  const imgSrcsetParsed = imgSrcset ? srcset.parse(imgSrcset) : [];
-
-  const imgSrscetParsedUrlsTransformed = await Promise.all(imgSrcsetParsed.map(async srcsetObj => {
-    const url = transformImageUrl(srcsetObj.url, dir, filePath)
-    const fileSize = await getFileSize(url)
-    return {
-      ...srcsetObj,
-      url,
-      fileSize
-    }
-  }))
-
-  const updatedImgSrcsetParsed =
-    imgSrscetParsedUrlsTransformed.length > 0
-      ? await Promise.all(imgSrscetParsedUrlsTransformed.map(async (srcsetObj) => (
-        {
-          ...srcsetObj,
-          url: srcsetObj.fileSize > replaceThreshold ? await imageUrlToPlaceholder(srcsetObj.url, paletteSize) : srcsetObj.url,
-        }
-      )))
-      : []
-
-  const updatedImgSrcset =
-    updatedImgSrcsetParsed.length > 0 &&
-      updatedImgSrcsetParsed.every(({ url }) => url.length > 1)
-      ? srcset.stringify(updatedImgSrcsetParsed)
-      : null;
-
   if (imgSrcset && updatedImgSrcset) {
     image.setAttribute('srcset', updatedImgSrcset)
     image.setAttribute('data-lazy-srcset', imgSrcset)
   }
 
-  return [
-    transformedImgSrc && updatedSrc && imgFileSize ? { url: transformedImgSrc, fileSize: imgFileSize } : { url: 'file not updated', fileSize: 0 },
-    ...(imgSrscetParsedUrlsTransformed && updatedImgSrcset ? imgSrscetParsedUrlsTransformed.map(({ url, fileSize }) => ({ url, fileSize })) : [])
-  ]
-
+  return reducedByLogOutput
 
 }
 export default manipulateImage
