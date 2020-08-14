@@ -14,9 +14,9 @@
     "netlify-plugin"
   ],
   "scripts": {
-    "build-test-site": "node build-test-site.js",
     "build": "rollup -c",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "build-test-site": "npm run build && node build-test-site.js"
   },
   "author": "",
   "license": "MIT",
