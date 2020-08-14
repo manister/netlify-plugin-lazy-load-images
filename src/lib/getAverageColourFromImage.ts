@@ -1,6 +1,8 @@
 import { loadImage, createCanvas } from 'canvas'
 import sum from './sum'
-const everyNth = (arr: number[], nth: number) => arr.filter((e, i) => i % nth === nth - 1);
+
+//eg 2n - 1 : nth =  2, offset = - 1
+const everyNth = (arr: number[], nth: number, offset: number = 0) => arr.filter((e, i) => !((i - offset + 1) % nth));
 
 const getAverageColourFromImage = async (imageUrl: string) => {
     const image = await loadImage(imageUrl);
@@ -9,11 +11,15 @@ const getAverageColourFromImage = async (imageUrl: string) => {
     const ctx = canvas.getContext('2d')
     ctx.drawImage(image, 0, 0, width, height)
     const imageData = ctx.getImageData(0, 0, width, height)
-    const paddedData = [0, 0, 0, ...imageData.data]
-    const r = sum(everyNth(paddedData.slice(0), 4)) / (imageData.data.length/4);
-    const g = sum(everyNth(paddedData.slice(1), 4)) / (imageData.data.length/4);
-    const b = sum(everyNth(paddedData.slice(2), 4)) / (imageData.data.length/4);
-    return { rgb: `rgb(${r},${g},${g})`, width, height}
+
+    const r = sum(everyNth([...imageData.data], 4, -3)) / (imageData.data.length/4);
+    const g = sum(everyNth([...imageData.data], 4, -2)) / (imageData.data.length/4);
+    const b = sum(everyNth([...imageData.data], 4, -1)) / (imageData.data.length/4);
+    const a = sum(everyNth([...imageData.data], 4)) / (imageData.data.length/4)/255; // want a 0-1
+
+    const rgba = `rgba(${r},${g},${b},${a})`;
+
+    return { rgba, width, height}
 }
 
 export default getAverageColourFromImage

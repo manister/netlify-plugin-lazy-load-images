@@ -8,8 +8,8 @@ const createPlaceHolderSVG = (width: number, height: number, colour: string) => 
 }
 
 const getPlaceHolder = async (imageURL: string) => {
-  const {rgb, width, height} = await getAverageColourFromImage(imageURL)
-  const svg = createPlaceHolderSVG(width, height, rgb)
+  const {rgba, width, height} = await getAverageColourFromImage(imageURL)
+  const svg = createPlaceHolderSVG(width, height, rgba)
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
