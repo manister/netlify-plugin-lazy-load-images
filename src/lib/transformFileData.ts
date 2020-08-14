@@ -20,17 +20,18 @@ const parseHTML = (html: string) => parse(html, {
 type TransformFileDataCfg = {
   filePath: string,
   excludeElements: string,
+  applyContainer: string,
   dir: string,
-  replaceThreshold: number
+  replaceThreshold: number,
 }
 
 
-const transformFileData = async ({ filePath, excludeElements, dir, replaceThreshold }: TransformFileDataCfg) => {
+const transformFileData = async ({ filePath, excludeElements, dir, replaceThreshold, applyContainer }: TransformFileDataCfg) => {
   const fileData = fs.readFileSync(filePath)
   const fileDataString = fileData.toString();
   const parsed = parseHTML(fileDataString)
   const document = (parsed as unknown as HTMLElement)
-  const images = document.querySelectorAll<HTMLImageElement | HTMLSourceElement>('img, source')
+  const images = document.querySelectorAll<HTMLImageElement | HTMLSourceElement>(`${applyContainer} img, ${applyContainer} source`)
   const filteredImages = filterImages(Array.from(images), excludeElements)
   const logs = await Promise.all([...filteredImages].map(async image => await manipulateImage(image, { dir, filePath, replaceThreshold })));
   document.appendChild(scriptToInject as unknown as HTMLElement)

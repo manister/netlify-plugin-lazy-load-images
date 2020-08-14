@@ -3,39 +3,134 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Images</title>
+  <title>Example Images</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"  rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      line-height: 1.8;
+      padding: 24px 0;
+    }
+
+    p, img {
+      margin-bottom: 1em;
+    }
+    h1, h2 {
+      margin-bottom: 0.5;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    h2 {
+      font-size: 25px;
+    }
+
+
+    pre {
+      line-height: 1.2;
+      font-family: monospace;
+      background: #2e2e2e;
+      color: #f1f1f1;
+      border: 2px solid #6f6f6f;
+      padding: 1em;
+      text-align: left;
+      margin: 16px 0;
+    }
+
+    code {
+      background: #2e2e2e;
+      font-size: 16px;
+      color: #f1f1f1;
+      padding: 0.2em;
+      white-space: nowrap;
+    }
+
+    code.comment {
+      opacity: 0.5;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 1000px;
+      padding: 0 16px;
+      text-align: center;
+    }
+
+    .container img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1em;
+    }
+
+  </style>
 </head>
 
 <body>
-  <h1>External Images</h1>
-  <img alt="alt text"
-    src="https://images.unsplash.com/photo-1591795741155-03bd2065944c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=100&fit=max">
+
+  <div class="container">
+    <h1>Lazy load plugin example</h1>
+
+    <a target="_blank" href="https://github.com/manister/netlify-plugin-lazy-load-images">https://github.com/manister/netlify-plugin-lazy-load-images</a>    
+    
+    <pre>
+      <code class="comment"># netlify.toml</code>
   
+      <code>[[plugins]]</code>
+        <code>package = "."</code>
+          <code>[plugins.inputs]</code>
+            <code>excludeFiles = ["/exclude/**"] </code><code class="comment"># default = []</code>
+            <code>applyContainer = ".rte-content" </code><code class="comment"># default = "body"</code>
+            <code>excludeElements = '[data-src], .lazy-load' = [] </code><code class="comment"># default = '[data-src], .lazy-load'</code>
+            <code>replaceThreshold = 0 </code><code class="comment"># default = 0</code>
+
+    </pre>
+
+
+    <p>This won't lazy load as it doesn't fall within a container that matches the <code>applyContainer</code> selector (here <code>.rte-content</code>)</p>
+    <img alt="alt text" class="lazy-load"
+      src="https://images.unsplash.com/photo-1591795741155-03bd2065944c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+    <p>*********</p>
+  </div>
   
-  <img alt="alt text" class="lazy-load"
-    src="https://images.unsplash.com/photo-1591795741155-03bd2065944c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
-  <img alt="alt text"
-    src="https://images.unsplash.com/photo-1590660058203-d7f3599c0edf?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
-  <img alt="alt text"
-    src="https://images.unsplash.com/photo-1590219064212-2afc410c1219?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+  <div class="container rte-content">
+    <h2>External Images</h2>
+    <p>This won't lazy load as the img matches excludeElements by selector</p>
+    <img alt="alt text" class="lazy-load"
+      src="https://images.unsplash.com/photo-1591795741155-03bd2065944c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+    <p>*********</p>
+    <p>These will all have lazy loading applied as they fall within a container that matches the <code>applyContainer</code> selector (here <code>.rte-content</code>)</p>
+    <img alt="alt text"
+      src="https://images.unsplash.com/photo-1590660058203-d7f3599c0edf?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+    <img alt="alt text"
+      src="https://images.unsplash.com/photo-1590219064212-2afc410c1219?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max">
+    <p>*********</p>
+    <h1>Local Images</h1>
+    <img src="/beach.jpg" class="lazy" alt="alt text">
+    <img alt="alt text" src="/blm.jpg">
+    <img alt="alt text" src="/bike.jpg">
+    <img alt="alt text" src="/example.svg">
 
-  <h1>Local Images</h1>
-  <img src="/beach.jpg" class="lazy" alt="alt text">
-  <img alt="alt text" src="/blm.jpg">
-  <img alt="alt text" src="/bike.jpg">
-  <img alt="alt text" src="/example.svg">
+    <p>*********</p>
+    <h1>With srcsets</h1>
 
-
-  <h1>With srcsets</h1>
-
-  <picture>
-    <source media="(max-width: 500px)" srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80" data-lazy-srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80">
-    <source media="(min-width: 501px)" srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" data-lazy-srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80">
-    <img src="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80"
-      alt="alt text">
-  </picture>
-
-  <img srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w, https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w" src="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop" alt="alt text" data-lazy-srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w, https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w">
+    <picture>
+      <source media="(max-width: 500px)" srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&h=600&q=80" data-lazy-srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80">
+      <source media="(min-width: 501px)" srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" data-lazy-srcset="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80">
+      <img src="https://images.unsplash.com/photo-1591751598865-7c243e3f8f05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&h=300&q=80"
+        alt="alt text">
+    </picture>
+    <img srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w, https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w" src="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop" alt="alt text" data-lazy-srcset="https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=960&fit=crop 480w, https://images.unsplash.com/photo-1591259414882-19dbb3179317?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&fit=crop 800w">
+  </div>
 </body>
 
 </html>

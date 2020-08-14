@@ -10,12 +10,12 @@ const getAverageColourFromImage = async (imageUrl: string) => {
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
     ctx.drawImage(image, 0, 0, width, height)
-    const imageData = ctx.getImageData(0, 0, width, height)
+    const imageData = [...ctx.getImageData(0, 0, width, height).data]
 
-    const r = sum(everyNth([...imageData.data], 4, -3)) / (imageData.data.length/4);
-    const g = sum(everyNth([...imageData.data], 4, -2)) / (imageData.data.length/4);
-    const b = sum(everyNth([...imageData.data], 4, -1)) / (imageData.data.length/4);
-    const a = sum(everyNth([...imageData.data], 4)) / (imageData.data.length/4)/255; // want a 0-1
+    const r = sum(everyNth([...imageData], 4, -3)) / (imageData.length/4);
+    const g = sum(everyNth([...imageData], 4, -2)) / (imageData.length/4);
+    const b = sum(everyNth([...imageData], 4, -1)) / (imageData.length/4);
+    const a = sum(everyNth([...imageData], 4)) / (imageData.length/4)/255; // want a 0-1
 
     const rgba = `rgba(${r},${g},${b},${a})`;
 

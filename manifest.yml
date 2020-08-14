@@ -4,10 +4,15 @@ inputs:
     description: globs to exclude files from applying lazy load
     required: false
     default: []
+  - name: applyContainer
+    description: css selector of container to apply the plugin
+    required: false
+    default: 'body'
   - name: excludeElements
     description: css selector to exclude elements from applying lazy load
     required: false
     default: '[data-src], .lazy-load'
   - name: replaceThreshold
+    required: false
     description: size in bytes for an image to be in order to be replaced by placeholder
     default: 0
