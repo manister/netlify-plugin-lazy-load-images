@@ -24,10 +24,10 @@ Note: The `[[plugins]]` line is required for each plugin, even if you have other
 [[plugins]]
   package = "."
     [plugins.inputs]
-      excludeFiles = ["/exclude/**"] # default = []
-      applyContainer = ".rte-content" # default = "body"
-      excludeElements = '[data-src], .lazy-load' # default = '[data-src], .lazy-load'
-      replaceThreshold = 0 # default = 0
+      excludeFiles = []
+      applyContainer = "body"
+      excludeElements = '[data-src], .lazy-load'
+      replaceThreshold = 0
 ```
 
 ### excludeFiles
