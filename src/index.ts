@@ -34,12 +34,12 @@ export default {
           replaceThreshold
         })
         const totalForFileLogged = filesize(sum(Object.values(log)));
-        console.log(`For ${filePath}, ${totalForFileLogged} in unique requests saved.`)
+        console.log("\x1b[32m", `For ${filePath}, ${totalForFileLogged} in unique requests saved.`, "\x1b[0m")
         return log;
        }
       ))
       const totalLogged = filesize(sum(Object.values(mergeLogObjArray(logs))));
-      console.log(`In total ${totalLogged} in unique requests saved.`)
+      console.log("\x1b[32m", `In total ${totalLogged} in unique requests saved.`, "\x1b[0m")
 
     } catch (error) {
       utils.build.failPlugin('The Lazy Load plugin failed.', { error })

@@ -16,7 +16,7 @@ const getFileSize = async (url: string) => {
   try {
     return isAbsoluteUrl(url) ? await getRemoteFileSize(url) : fs.statSync(url).size;
   } catch (e) {
-    console.warn("\x1b[31m", `Could\'t determine file size for ${url}.`, "\x1b[32m")
+    console.warn("\x1b[31m", `Could\'t determine file size for ${url}.`, "\x1b[0m")
     return 0
   }
 }
