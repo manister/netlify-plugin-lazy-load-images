@@ -1,5 +1,5 @@
 {
-  "version": "0.3.1",
+  "version": "0.3.2",
   "name": "netlify-plugin-lazy-load-images",
   "description": "Build plugin to implement lazy-loading images.",
   "homepage": "https://github.com/manister/netlify-plugin-lazy-load-images#readme",
