@@ -20,11 +20,14 @@ Note: The `[[plugins]]` line is required for each plugin, even if you have other
 ## Configuration
 
 ```toml
+# netlify.toml
 [[plugins]]
-package = "netlify-plugin-lazy-load-images"
-  [plugins.inputs]
-  excludeFiles = []
-  excludeElements = '.lazy, .lazy-load, [data-src]'
+  package = "."
+    [plugins.inputs]
+      excludeFiles = ["/exclude/**"] # default = []
+      applyContainer = ".rte-content" # default = "body"
+      excludeElements = '[data-src], .lazy-load' = [] # default = '[data-src], .lazy-load'
+      replaceThreshold = 0 # default = 0
 ```
 
 ### excludeFiles
