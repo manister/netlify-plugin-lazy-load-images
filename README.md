@@ -4,6 +4,8 @@ Once site is built, this plugin replaces src and srcsets with inline placeholder
 
 Most useful where large image content is added by a site admin through a wysiwyg, a richtext editor, or markdown.
 
+An example of the plugin in action lives here: https://lazy-load-plugin-test.netlify.app/
+
 ## Installation
 
 To install, add the following lines to your `netlify.toml` file:
